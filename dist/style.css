@@ -48,6 +48,22 @@ div.day-card {
   align-items: center;
 }
 
+div.hour-changer {
+  grid-column: 1;
+  grid-row: 3;
+  justify-self: center;
+  align-self: end;
+  display: flex;
+  gap: 10px;
+}
+
+div.hour-changer > div.dot {
+  width: 6px;
+  height: 6px;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+
 div.hourly-info {
   border: solid red 2px;
   grid-row: 4;
