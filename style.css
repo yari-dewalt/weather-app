@@ -6,18 +6,18 @@ body {
   display: flex;
   flex-direction: column;
   color: white;
+  background-image: url("images/background.jpg");
+  background-size: cover;
 }
 
 div#content {
   width: 96%;
-  height: 84%;
+  height: 90%;
   display: grid;
   grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
   grid-template-rows: 1fr 2fr 2fr 2fr;
   gap: 1rem;
   padding: 2%;
-  background-image: url("images/background.jpg");
-  background-size: cover;
 }
 
 div.current-info {
@@ -81,20 +81,4 @@ div.hour-card {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-footer {
-  width: 100%;
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: grey;
-}
-
-div.footer-info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
 }
