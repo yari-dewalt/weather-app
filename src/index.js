@@ -1,40 +1,69 @@
-import { get_current_data } from "./weatherapi";
-import { three_day_forecast } from "./weatherapi";
+import {
+  update_current_info,
+  update_forecast,
+  setup_hourly_info,
+  update_hourly_info_before,
+  update_hourly_info_next,
+} from "./info";
+
+import { get_three_day_forecast, get_current_data } from "./weatherapi";
 
 const form = document.getElementById("form");
 const input = document.getElementById("city");
-let current_location = document.getElementById("current-location");
-let current_region = document.getElementById("current-region");
-let current_date_time = document.getElementById("current-date-time");
-let current_temperature = document.getElementById("current-temperature");
-let current_weather = document.getElementById("current-weather");
-let current_weather_icon = document.getElementById("current-weather-icon");
+let selected_day = 0;
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const info = await get_current_data(input.value);
-
-  const location = info[0];
-  current_location.textContent = location;
-
-  const region = info[1];
-  current_region.textContent = region;
-
-  const date_time = info[2];
-  current_date_time.textContent = date_time;
-
-  const temperature_fahrenheit = info[3];
-  current_temperature.textContent = temperature_fahrenheit;
-
-  const condition = info[4];
-  current_weather.textContent = condition;
-
-  const condition_icon = info[5];
-  current_weather_icon.setAttribute("src", `https://${condition_icon}`);
-
-  console.log(info);
-  input.value = "";
+  window.current_info = await get_current_data(input.value);
+  window.forecast_info = await get_three_day_forecast(input.value);
+  update_current_info(window.current_info);
+  update_forecast(window.forecast_info);
+  setup_hourly_info(window.forecast_info[0]);
 });
 
-three_day_forecast("Redding", 3);
+let left_arrow = document.getElementById("left-arrow");
+left_arrow.addEventListener("click", () => {
+  let hour = document.getElementById("hour-1-time");
+  let context = hour.textContent.split(" ")[1];
+  hour = hour.textContent.split(" ")[0];
+  hour = parseInt(hour);
+  if (context === "pm") {
+    hour += 12;
+  } else if (hour === 12 && context === "am") {
+    hour -= 12;
+  }
+
+  update_hourly_info_before(window.forecast_info[selected_day], hour);
+});
+
+let right_arrow = document.getElementById("right-arrow");
+right_arrow.addEventListener("click", () => {
+  let hour = document.getElementById("hour-1-time");
+  let context = hour.textContent.split(" ")[1];
+  hour = hour.textContent.split(" ")[0];
+  hour = parseInt(hour);
+  if (context === "pm") {
+    hour += 12;
+  } else if (hour === 12 && context === "am") {
+    hour -= 12;
+  }
+
+  if (hour === 16) {
+    return;
+  }
+
+  update_hourly_info_next(window.forecast_info[selected_day], hour);
+});
+
+const days = document.getElementsByClassName("day-card");
+Array.from(days).forEach((day, index) => {
+  day.addEventListener("click", () => {
+    Array.from(days).forEach((day) => {
+      day.className = "day-card";
+    });
+    day.className = "day-card selected";
+    setup_hourly_info(window.forecast_info[index]);
+    selected_day = index;
+  });
+});
