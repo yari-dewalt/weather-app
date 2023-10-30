@@ -50,29 +50,25 @@ async function get_current_data(city_name) {
   ];
 }
 
-async function three_day_forecast(city_name, days) {
+async function get_three_day_forecast(city_name) {
   const response = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city_name}&days=${days}`,
+    `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city_name}&days=3`,
     { mode: "cors" }
   );
 
   const weather_data = await response.json();
 
-  const current_data = weather_data.current;
-  console.log(current_data);
-
   const forecast_data = weather_data.forecast;
   console.log(forecast_data);
 
   const first_day_data = forecast_data.forecastday[0];
-  console.log(first_day_data);
 
   const second_day_data = forecast_data.forecastday[1];
-  console.log(second_day_data);
 
   const third_day_data = forecast_data.forecastday[2];
-  console.log(third_day_data);
+
+  return [first_day_data, second_day_data, third_day_data];
 }
 
 export { get_current_data };
-export { three_day_forecast };
+export { get_three_day_forecast };
