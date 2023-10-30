@@ -48,6 +48,10 @@ div.day-card {
   align-items: center;
 }
 
+div.day-card.selected {
+  border: solid white 4px;
+}
+
 div.hour-changer {
   grid-column: 1;
   grid-row: 3;
@@ -55,6 +59,15 @@ div.hour-changer {
   align-self: end;
   display: flex;
   gap: 10px;
+  align-items: center;
+}
+
+svg {
+  fill: white;
+}
+
+svg:hover {
+  cursor: pointer;
 }
 
 div.hour-changer > div.dot {
