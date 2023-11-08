@@ -46,6 +46,7 @@ div.day-card {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 div.day-card.selected {
@@ -77,6 +78,14 @@ div.hour-changer > div.dot {
   border-radius: 50%;
 }
 
+div.dot:hover {
+  cursor: pointer;
+}
+
+div.dot.selected {
+  background-color: white;
+}
+
 div.hourly-info {
   border: solid red 2px;
   grid-row: 4;
@@ -94,4 +103,8 @@ div.hour-card {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+div.hour-card.selected {
+  border: solid white 4px;
 }
