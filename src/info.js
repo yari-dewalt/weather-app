@@ -52,6 +52,28 @@ async function update_forecast(info) {
 async function setup_hourly_info(info) {
   const current_hour = get_current_hour();
 
+  let dots = document.getElementsByClassName("dot");
+  Array.from(dots).forEach((dot) => {
+    dot.className = "dot";
+  });
+  if (current_hour <= 8) {
+    dots[0].className = "dot selected";
+  } else if (current_hour <= 16) {
+    dots[1].className = "dot selected";
+  } else if (current_hour <= 24) {
+    dots[2].className = "dot selected";
+  }
+
+  let hour_cards = document.getElementsByClassName("hour-card");
+  Array.from(hour_cards).forEach((hour) => {
+    hour.className = "hour-card";
+  });
+
+  let hour_card_selected = document.getElementById(
+    `hour-${(current_hour % 8) + 1}`
+  );
+  hour_card_selected.className = "hour-card selected";
+
   hourly_data_helper(info, current_hour);
 }
 
