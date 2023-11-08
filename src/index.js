@@ -8,11 +8,32 @@ import {
 
 import { get_three_day_forecast, get_current_data } from "./weatherapi";
 
+let loading = true;
+
+let content = document.getElementById("content");
+let loading_screen = document.getElementById("loading-screen");
+
+if (loading) {
+  console.log("LAOINDG");
+  loading_screen.style.display = "block";
+  for (const child of content.children) {
+    child.style.display = "none";
+  }
+}
+
 window.current_info = await get_current_data("Los Angeles");
 window.forecast_info = await get_three_day_forecast("Los Angeles");
 update_current_info(window.current_info);
 update_forecast(window.forecast_info);
 setup_hourly_info(window.forecast_info[0]);
+
+loading = false;
+if (!loading) {
+  loading_screen.style.display = "none";
+  for (const child of content.children) {
+    child.style.display = "";
+  }
+}
 
 const form = document.getElementById("form");
 const input = document.getElementById("city");
@@ -22,6 +43,12 @@ const days = document.getElementsByClassName("day-card");
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+
+  loading = true;
+  if (loading) {
+    console.log("LAOINDG");
+    loading_screen.style.display = "block";
+  }
 
   window.current_info = await get_current_data(input.value);
   window.forecast_info = await get_three_day_forecast(input.value);
@@ -40,6 +67,14 @@ form.addEventListener("submit", async (event) => {
 
   const first_day_card = document.getElementById("day-0");
   first_day_card.className = "day-card selected";
+
+  loading = false;
+  if (!loading) {
+    loading_screen.style.display = "none";
+    for (const child of content.children) {
+      child.style.display = "";
+    }
+  }
 });
 
 let dots = document.getElementsByClassName("dot");
