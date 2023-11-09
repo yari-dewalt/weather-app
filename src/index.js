@@ -12,9 +12,9 @@ let loading = true;
 
 let content = document.getElementById("content");
 let loading_screen = document.getElementById("loading-screen");
+const first_day_card = document.getElementById("day-0");
 
 if (loading) {
-  console.log("LAOINDG");
   loading_screen.style.display = "block";
   for (const child of content.children) {
     child.style.display = "none";
@@ -26,6 +26,7 @@ window.forecast_info = await get_three_day_forecast("Los Angeles");
 update_current_info(window.current_info);
 update_forecast(window.forecast_info);
 setup_hourly_info(window.forecast_info[0]);
+first_day_card.className = "day-card selected";
 
 loading = false;
 if (!loading) {
@@ -46,26 +47,27 @@ form.addEventListener("submit", async (event) => {
 
   loading = true;
   if (loading) {
-    console.log("LAOINDG");
     loading_screen.style.display = "block";
   }
 
-  window.current_info = await get_current_data(input.value);
-  window.forecast_info = await get_three_day_forecast(input.value);
-  update_current_info(window.current_info);
-  update_forecast(window.forecast_info);
-  setup_hourly_info(window.forecast_info[0]);
+  try {
+    window.current_info = await get_current_data(input.value);
+    window.forecast_info = await get_three_day_forecast(input.value);
+    update_current_info(window.current_info);
+    update_forecast(window.forecast_info);
+    setup_hourly_info(window.forecast_info[0]);
+  } catch (error) {
+    loading = false;
+  }
 
   selected_hour_time =
     document.getElementsByClassName("hour-card selected")[0].firstElementChild
       .textContent;
-  console.log(selected_hour_time);
 
   Array.from(days).forEach((day) => {
     day.className = "day-card";
   });
 
-  const first_day_card = document.getElementById("day-0");
   first_day_card.className = "day-card selected";
 
   loading = false;
