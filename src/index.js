@@ -28,6 +28,12 @@ update_forecast(window.forecast_info);
 setup_hourly_info(window.forecast_info[0]);
 first_day_card.className = "day-card selected";
 
+let selected_hour_time;
+
+selected_hour_time =
+  document.getElementsByClassName("hour-card selected")[0].firstElementChild
+    .textContent;
+
 loading = false;
 if (!loading) {
   loading_screen.style.display = "none";
@@ -39,7 +45,6 @@ if (!loading) {
 const form = document.getElementById("form");
 const input = document.getElementById("city");
 let selected_day = 0;
-let selected_hour_time;
 const days = document.getElementsByClassName("day-card");
 
 form.addEventListener("submit", async (event) => {
@@ -100,6 +105,14 @@ Array.from(dots).forEach((dot, i) => {
     }
 
     update_hourly_info_next(window.forecast_info[selected_day], hour);
+
+    let hour_cards = document.getElementsByClassName("hour-card");
+    Array.from(hour_cards).forEach((hour) => {
+      hour.className = "hour-card";
+      if (hour.firstElementChild.textContent === selected_hour_time) {
+        hour.className = "hour-card selected";
+      }
+    });
   });
 });
 
