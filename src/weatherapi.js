@@ -4,7 +4,7 @@ const API_KEY = "d679f5647a6d4e16a6522939232510";
 
 async function get_current_data(city_name) {
   const response = await fetch(
-    `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city_name}`,
+    `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city_name}`,
     { mode: "cors" }
   );
 
@@ -52,7 +52,7 @@ async function get_current_data(city_name) {
 
 async function get_three_day_forecast(city_name) {
   const response = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city_name}&days=3`,
+    `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city_name}&days=3`,
     { mode: "cors" }
   );
 
