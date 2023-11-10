@@ -43,8 +43,10 @@ async function update_forecast(info) {
     day_elements[1].textContent = info[i].day.condition.text;
     day_elements[2].textContent = `${Math.round(info[i].day.maxtemp_f)} °F`;
     day_elements[3].textContent = `${Math.round(info[i].day.mintemp_f)} °F`;
-    day_elements[4].textContent = `${info[i].day.avghumidity} %`;
-    day_elements[5].textContent = `${Math.round(info[i].day.maxwind_mph)} mph`;
+    day_elements[4].textContent = `${info[i].day.avghumidity}% Humidity`;
+    day_elements[5].textContent = `${Math.round(
+      info[i].day.maxwind_mph
+    )} mph Winds`;
     i++;
   });
 }
